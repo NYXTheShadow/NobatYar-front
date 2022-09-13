@@ -110,6 +110,7 @@ export default function WithSubnavigation(props) {
             ثبت نام
           </Button>
           <Button
+            display={{ base: "none", md: "inline-flex" }}
             aria-label="Toggle Color Mode"
             onClick={toggleColorMode}
             _focus={{ boxShadow: "none" }}
@@ -214,7 +215,8 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
   );
 };
 
-const MobileNav = () => {
+const MobileNav = (props) => {
+  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Stack
       bg={useColorModeValue("white", "gray.800")}
@@ -224,6 +226,36 @@ const MobileNav = () => {
       {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
+      <Stack spacing={4}>
+        <Flex
+          py={2}
+          as={Link}
+          justify={"space-between"}
+          align={"center"}
+          _hover={{
+            textDecoration: "none",
+          }}
+        >
+          <Flex>
+            <Button
+              aria-label="Toggle Color Mode"
+              onClick={toggleColorMode}
+              _focus={{ boxShadow: "none" }}
+              w="fit-content"
+              {...props}
+            >
+              <Text
+                fontWeight={600}
+                color={useColorModeValue("gray.600", "gray.200")}
+                paddingRight={3}
+              >
+                حالت شب
+              </Text>
+              {colorMode === "light" ? <BsMoonStarsFill /> : <BsSun />}
+            </Button>
+          </Flex>
+        </Flex>
+      </Stack>
     </Stack>
   );
 };
