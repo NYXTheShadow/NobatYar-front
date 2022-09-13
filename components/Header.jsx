@@ -14,6 +14,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  useColorMode,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -22,12 +23,16 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 
+import { BsSun, BsMoonStarsFill } from "react-icons/bs";
+
 import { useRouter } from "next/router";
 
-export default function WithSubnavigation() {
+export default function WithSubnavigation(props) {
   const { isOpen, onToggle } = useDisclosure();
 
   const router = useRouter();
+
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Box>
@@ -93,15 +98,25 @@ export default function WithSubnavigation() {
             display={{ base: "none", md: "inline-flex" }}
             fontSize={"sm"}
             fontWeight={600}
+            colorScheme="green"
             color={"white"}
-            bg={"pink.400"}
+            bg={"green.400"}
             href={"#"}
             _hover={{
-              bg: "pink.300",
+              bg: "green.500",
             }}
             onClick={() => router.push("/register")}
           >
             ثبت نام
+          </Button>
+          <Button
+            aria-label="Toggle Color Mode"
+            onClick={toggleColorMode}
+            _focus={{ boxShadow: "none" }}
+            w="fit-content"
+            {...props}
+          >
+            {colorMode === "light" ? <BsMoonStarsFill /> : <BsSun />}
           </Button>
         </Stack>
       </Flex>
